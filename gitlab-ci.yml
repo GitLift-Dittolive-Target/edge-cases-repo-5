@@ -1,0 +1,19 @@
+include:
+  - local: 'ci/common.yml'
+  - project: 'gitlab-org/gitlab'
+    file: '/lib/gitlab/ci/templates/Jobs/SAST.gitlab-ci.yml'
+
+stages:
+  - build
+  - deploy
+
+build-job:
+  stage: build
+  script:
+    - echo "Building..."
+
+dynamic-child-pipeline:
+  stage: deploy
+  trigger:
+    include: ci/dynamic.yml
+    strategy: depend
